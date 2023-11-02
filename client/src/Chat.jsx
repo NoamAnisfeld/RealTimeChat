@@ -231,8 +231,88 @@
 // export default Chat;
 
 
+// import React, { useEffect, useState } from "react";
+// import ScrollToBottom from "react-scroll-to-bottom";
+
+// function Chat({ socket, username, room }) {
+//   const [currentMessage, setCurrentMessage] = useState("");
+//   const [messageList, setMessageList] = useState([]);
+
+//   const sendMessage = async () => {
+//     if (currentMessage !== "") {
+//       const messageData = {
+//         room: room,
+//         author: username,
+//         message: currentMessage,
+//         time: new Date().toLocaleTimeString(),
+//       };
+
+//       // הוסף את ההודעה לרשימת ההודעות לאחר שהיא נשלחת
+//       setMessageList([...messageList, messageData]);
+
+//       await socket.emit("send_message", messageData);
+
+//       // אפס את ההודעה הנוכחית
+//       setCurrentMessage("");
+//     }
+//   };
+
+//   useEffect(() => {
+//     socket.on("receive_message", (data) => {
+//       // בתגובה להודעה שהתקבלה, הוסף אותה לרשימת ההודעות
+//       setMessageList((list) => [...list, data]);
+//     });
+//   }, [socket]);
+
+//   return (
+//     <div className="chat-window">
+//       <div className="chat-header">
+//         <p>Live Chat</p>
+//       </div>
+//       <div className="chat-body">
+//         <ScrollToBottom className="message-container">
+//           {messageList.map((messageContent, index) => (
+//             <div
+//               key={index}
+//               className={`message ${username === messageContent.author ? "you" : "other"}`}
+//             >
+//               <div>
+//                 <div className="message-content">
+//                   <p>{messageContent.message}</p>
+//                 </div>
+//                 <div className="message-meta">
+//                   <p className="time">{messageContent.time}</p>
+//                   <p className="author">{messageContent.author}</p>
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//         </ScrollToBottom>
+//       </div>
+//       <div className="chat-footer">
+//         <input
+//           type="text"
+//           value={currentMessage}
+//           placeholder="Hey..."
+//           onChange={(event) => {
+//             setCurrentMessage(event.target.value);
+//           }}
+//           onKeyPress={(event) => {
+//             event.key === "Enter" && sendMessage();
+//           }}
+//         />
+//         <button onClick={sendMessage}>&#9658;</button>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Chat;
+
+
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { Button, TextField } from "@mui/material";
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -255,7 +335,7 @@ function Chat({ socket, username, room }) {
       // אפס את ההודעה הנוכחית
       setCurrentMessage("");
     }
-  };
+  }
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -290,7 +370,7 @@ function Chat({ socket, username, room }) {
         </ScrollToBottom>
       </div>
       <div className="chat-footer">
-        <input
+        <TextField
           type="text"
           value={currentMessage}
           placeholder="Hey..."
@@ -298,10 +378,16 @@ function Chat({ socket, username, room }) {
             setCurrentMessage(event.target.value);
           }}
           onKeyPress={(event) => {
-            event.key === "Enter" && sendMessage();
+            if (event.key === "Enter") sendMessage();
           }}
         />
-        <button onClick={sendMessage}>&#9658;</button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={sendMessage}
+        >
+          &#9658;
+        </Button>
       </div>
     </div>
   );
