@@ -228,7 +228,7 @@
 //   );
 // }
 
-export default Chat;
+// export default Chat;
 
 
 import React, { useEffect, useState } from "react";
