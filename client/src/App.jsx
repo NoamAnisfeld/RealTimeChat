@@ -3,7 +3,7 @@ import "./App.css";
 import io from "socket.io-client";
 import Chat from "./Chat";
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("https://vercel.com/senders-projects/real-time-chat/7jdUEJxSrVibEJ27d9pq31uLcK9w");
 
 function App() {
   const [username, setUsername] = useState("");
